@@ -13,13 +13,19 @@ import java.util.List;
 import sampley.sampley_fueltrack.data.Entry;
 
 /**
- * Created by A on 2016-01-24.
+ * This class stores all data used throughout the app, using a singleton model: Only one of these
+ * objects ever exists.
+ *
+ * <p>
+ * The {@link AppData} stores all the entries, and manages loading and saving to a file. It also
+ * contains the context under which it was created, which is used to manage file access.
+ * </p>
  */
 public class AppData {
     private static AppData instance;
     private Context context;
     private List<Entry> entries;
-    private static final String ENTRY_FILE_NAME = "entries.sav";
+    public static final String ENTRY_FILE_NAME = "entries.sav";
 
     // prevent use of default constructor, other than to create one instance
     protected AppData(Context c) {
@@ -45,27 +51,44 @@ public class AppData {
     }
 
 
-    public static void writeToLocalFile(Context context, String localFilePath, Object o) throws IOException {
+    protected static void writeToLocalFile(Context context, String localFilePath, Object o) throws IOException {
         ObjectOutputStream oout = new ObjectOutputStream(context.openFileOutput(localFilePath, Context.MODE_PRIVATE));
         oout.writeObject(o);
         oout.close();
     }
 
-    public static Object readFromLocalFile(Context context, String localFilePath) throws IOException, ClassNotFoundException {
+    protected static Object readFromLocalFile(Context context, String localFilePath) throws IOException, ClassNotFoundException {
         ObjectInputStream oin = new ObjectInputStream(context.openFileInput(localFilePath));
         Object o = oin.readObject();
         oin.close();
         return o;
     }
 
+    /**
+     * Load all the entries saved on the device. The file location is determined by the {@link Context}
+     * which created this instance of {@link AppData}. The file name is stored as a constant
+     * (ENTRY_FILE_NAME) in the class definition.
+     * @throws IOException There was an error reading the file.
+     * @throws ClassNotFoundException The file contains an unknown class.
+     */
     public void loadEntries() throws IOException, ClassNotFoundException {
         entries = (List<Entry>)readFromLocalFile(context, ENTRY_FILE_NAME);
     }
 
+    /**
+     * Save all the entries to the device. The file location is determined by the {@link Context}
+     * which created this instance of {@link AppData}. The file name is stored as a constant
+     * (ENTRY_FILE_NAME) in the class definition.
+     * @throws IOException There was an error writing the file.
+     */
     public void saveEntries() throws IOException {
         writeToLocalFile(context, ENTRY_FILE_NAME, entries);
     }
 
+    /**
+     * Get the list of entries.
+     * @return The list of entries.
+     */
     public List<Entry> getEntries() {
         return entries;
     }
