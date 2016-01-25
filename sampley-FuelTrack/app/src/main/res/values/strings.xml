@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">sampley-FuelTrack</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_entry">EntryActivity</string>
+    <string name="title_activity_add_entry">AddEntryActivity</string>
+    <string name="button_add_entry">Add Entry</string>
+    <string name="button_view_entries">View Entries</string>
+    <string name="button_save_entry">Save Entry</string>
+    <string name="text_date">Date (YYYY-MM-DD)</string>
+    <string name="text_enter_date">YYYY-MM-DD</string>
+    <string name="text_station">Station</string>
+    <string name="text_enter_station">Enter station name</string>
+    <string name="text_amount">Volume (L)</string>
+    <string name="text_enter_amount">Enter amount of fuel (L)</string>
+    <string name="text_grade">Grade</string>
+    <string name="text_enter_grade">Enter grade of fuel</string>
+    <string name="text_cost">Cost (¢/L)</string>
+    <string name="text_enter_cost">Enter cost of fuel (cents/L)</string>
 </resources>
