@@ -46,6 +46,7 @@ public class AppData {
         if (instance == null) {
             return new AppData(c);
         } else {
+            instance.context = c;
             return instance;
         }
     }

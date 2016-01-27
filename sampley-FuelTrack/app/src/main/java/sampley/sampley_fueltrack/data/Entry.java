@@ -24,6 +24,7 @@ public class Entry implements Serializable {
     private Date date;
     private Station station;
     private Fuel fuel;
+    private float odometer;
 
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -32,14 +33,16 @@ public class Entry implements Serializable {
      * @param date The date of refuelling.
      * @param station The station at which refuelling occurred.
      * @param fuel All information about the fuel purchased.
+     * @param odometer Reading from the odometer, in km.
      * @see Date
      * @see Station
      * @see Fuel
      */
-    public Entry(Date date, Station station, Fuel fuel) {
+    public Entry(Date date, Station station, Fuel fuel, float odometer) {
         this.date = date;
         this.station = station;
         this.fuel = fuel;
+        this.odometer = odometer;
     }
 
     /**
@@ -47,11 +50,12 @@ public class Entry implements Serializable {
      * @param date The date of refuelling.
      * @param station The name of the station.
      * @param fuel All information about the fuel purchased.
+     * @param odometer Reading from the odometer, in km.
      * @see Date
      * @see Fuel
      */
-    public Entry(Date date, String station, Fuel fuel) {
-        this(date, new Station(station), fuel);
+    public Entry(Date date, String station, Fuel fuel, float odometer) {
+        this(date, new Station(station), fuel, odometer);
     }
 
     /**
@@ -61,9 +65,10 @@ public class Entry implements Serializable {
      * @param fuelGrade The grade of the fuel. (Such as "Regular")
      * @param fuelUnitCost The unit cost of fuel, in cents per L.
      * @param fuelAmount The amount of fuel purchased, in L.
+     * @param odometer Reading from the odometer, in km.
      */
-    public Entry(Date date, Station station, String fuelGrade, float fuelUnitCost, float fuelAmount) {
-        this(date, station, new Fuel(fuelGrade, fuelUnitCost, fuelAmount));
+    public Entry(Date date, Station station, String fuelGrade, float fuelUnitCost, float fuelAmount, float odometer) {
+        this(date, station, new Fuel(fuelGrade, fuelUnitCost, fuelAmount), odometer);
     }
 
     /**
@@ -73,9 +78,10 @@ public class Entry implements Serializable {
      * @param fuelGrade The grade of the fuel. (Such as "Regular")
      * @param fuelUnitCost The unit cost of fuel, in cents per L.
      * @param fuelAmount The amount of fuel purchased, in L.
+     * @param odometer Reading from the odometer, in km.
      */
-    public Entry(Date date, String station, String fuelGrade, float fuelUnitCost, float fuelAmount) {
-        this(date, new Station(station), new Fuel(fuelGrade, fuelUnitCost, fuelAmount));
+    public Entry(Date date, String station, String fuelGrade, float fuelUnitCost, float fuelAmount, float odometer) {
+        this(date, new Station(station), new Fuel(fuelGrade, fuelUnitCost, fuelAmount), odometer);
     }
 
 

@@ -5,15 +5,18 @@
     <string name="title_activity_add_entry">AddEntryActivity</string>
     <string name="button_add_entry">Add Entry</string>
     <string name="button_view_entries">View Entries</string>
-    <string name="button_save_entry">Save Entry</string>
-    <string name="text_date">Date (YYYY-MM-DD)</string>
+    <string name="button_save_entry">Save</string>
+    <string name="button_cancel_entry">Cancel</string>
+    <string name="text_date">Date</string>
     <string name="text_enter_date">YYYY-MM-DD</string>
     <string name="text_station">Station</string>
     <string name="text_enter_station">Enter station name</string>
     <string name="text_amount">Volume (L)</string>
-    <string name="text_enter_amount">Enter amount of fuel (L)</string>
+    <string name="text_enter_amount">Litres</string>
     <string name="text_grade">Grade</string>
-    <string name="text_enter_grade">Enter grade of fuel</string>
+    <string name="text_enter_grade">Grade</string>
     <string name="text_cost">Cost (¢/L)</string>
-    <string name="text_enter_cost">Enter cost of fuel (cents/L)</string>
+    <string name="text_enter_cost">Cents per Litre</string>
+    <string name="text_odometer">Odometer (km)</string>
+    <string name="text_enter_odometer">Odometer Reading (km)</string>
 </resources>

@@ -1,10 +1,13 @@
 package sampley.sampley_fueltrack;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -45,9 +48,19 @@ public class ViewEntriesActivity extends AppCompatActivity {
 
         entriesView = (ListView)findViewById(R.id.entries_list);
         entriesView.setAdapter(entriesAdapter);
+        entriesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView aView, View view, int position, long index) {
+                editActivity();
+            }
+        });
 
         Log.println(Log.DEBUG, "ViewEntriesActivity", "ViewEntriesActivity created");
 
         Log.println(Log.DEBUG, "ViewEntriesActivity", entries.size() + " entries loaded");
+    }
+
+    public void editActivity() {
+        Intent intent = new Intent(this, AddEntryActivity.class);
+        startActivity(intent);
     }
 }

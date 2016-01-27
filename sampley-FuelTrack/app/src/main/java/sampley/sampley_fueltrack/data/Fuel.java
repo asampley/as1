@@ -44,7 +44,7 @@ public class Fuel implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s %0.3fL@%0.1f¢/L ($%0.2f)", grade, amount, unitCost, getTotalCost());
+        return String.format("%s %.3fL@%.1f¢/L ($%.2f)", grade, amount, unitCost, getTotalCost());
     }
 
 }

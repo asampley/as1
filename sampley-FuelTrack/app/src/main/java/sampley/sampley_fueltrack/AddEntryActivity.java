@@ -1,10 +1,13 @@
 package sampley.sampley_fueltrack;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.View;
@@ -42,15 +45,26 @@ public class AddEntryActivity extends AppCompatActivity {
         data = AppData.newInstance(this);
         entries = data.getEntries();
 
+        // add button listeners
         Button buttonSaveEntry = (Button)findViewById(R.id.button_save_entry);
+        Button buttonCancelEntry = (Button)findViewById(R.id.button_cancel_entry);
         buttonSaveEntry.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 saveEntry();
             }
         });
+        buttonCancelEntry.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        // auto-fill date field
         EditText dateView = (EditText)findViewById(R.id.text_enter_date);
         dateView.setText(dateFormat.format(new Date()));
+
+        // make date format automatically insert dashes after year and month
+        dateView.addTextChangedListener(new DateTextWatcher());
     }
 
     public void saveEntry() {
@@ -59,19 +73,69 @@ public class AddEntryActivity extends AppCompatActivity {
         EditText amountView = (EditText)findViewById(R.id.text_enter_amount);
         EditText gradeView = (EditText)findViewById(R.id.text_enter_grade);
         EditText costView = (EditText)findViewById(R.id.text_enter_cost);
+        EditText odometerView = (EditText)findViewById(R.id.text_enter_odometer);
+
+        // check if the data is valid, and if not, build an alert and pop it up.
+        boolean validData = true;
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        Date date = null;
+        Station station = null;
+        float amount = 0;
+        float cost = 0;
+        float odometer = 0;
 
         try {
-            Date date = dateFormat.parse(dateView.getText().toString());
-            Station station = new Station(stationView.getText().toString());
-            float amount = Float.parseFloat(amountView.getText().toString());
-            String grade = gradeView.getText().toString();
-            float cost = Float.parseFloat(costView.getText().toString());
+            date = dateFormat.parse(dateView.getText().toString());
+        } catch (ParseException e) {
+            Log.println(Log.ERROR, "AddEntryActivity", "Invalid Date: " + e.getMessage());
+            validData = false;
+            alertBuilder.setMessage("Date invalid. Format is:\nYYYY-MM-DD");
+            //alertBuilder.setNeutralButton("OK", null);
+            alertBuilder.create();
+        }
+
+        String stationName = stationView.getText().toString();
+        if (!stationName.trim().equals("")) {
+            station = new Station(stationView.getText().toString());
+        } else {
+            validData = false;
+            Log.println(Log.ERROR, "AddEntryActivity", "Invalid Name: " + stationName);
+        }
+        String grade = gradeView.getText().toString();
+        if (grade.trim().equals("")) {
+            validData = false;
+        }
+
+        try {
+            amount = Float.parseFloat(amountView.getText().toString());
+        } catch (NumberFormatException e) {
+            validData = false;
+            Log.println(Log.ERROR, "AddEntryActivity", "Invalid Volume: " + e.getMessage());
+        }
+
+        try {
+            cost = Float.parseFloat(costView.getText().toString());
+        } catch (NumberFormatException e) {
+            validData = false;
+            Log.println(Log.ERROR, "AddEntryActivity", "Invalid Cost: " + e.getMessage());
+        }
+
+        try {
+            odometer = Float.parseFloat(odometerView.getText().toString());
+        } catch (NumberFormatException e) {
+            validData = false;
+            Log.println(Log.ERROR, "AddEntryActivity", "Invalid Odometer Reading: " + e.getMessage());
+        }
+
+
+        if (validData) {
             Fuel fuel = new Fuel(grade, cost, amount);
-
-            Entry entry = new Entry(date, station, fuel);
-
+            Entry entry = new Entry(date, station, fuel, odometer);
             entries.add(entry);
             Log.println(Log.INFO, "AddEntryActivity", "Added Entry: " + entry.toString());
+        }
+
 
             try {
                 data.saveEntries();
@@ -79,12 +143,5 @@ public class AddEntryActivity extends AppCompatActivity {
                 Log.println(Log.ERROR, "AddEntryActivity", "Unable to save entry to file");
             }
 
-        } catch (ParseException | NumberFormatException e) {
-            if (e.getMessage() != null) {
-                Log.println(Log.ERROR, "AddEntryActivity", "Invalid arguments: " + e.getMessage());
-            } else {
-                Log.println(Log.ERROR, "AddEntryActivity", "Invalid arguments. No reason given.");
-            }
-        }
     }
 }
