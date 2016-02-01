@@ -47,4 +47,15 @@ public class Fuel implements Serializable {
         return String.format("%s %.3fL@%.1f¢/L ($%.2f)", grade, amount, unitCost, getTotalCost());
     }
 
+    public float getAmount() {
+        return amount;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public float getUnitCost() {
+        return unitCost;
+    }
 }

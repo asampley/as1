@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import sampley.sampley_fueltrack.MVC.MVCModel;
+import sampley.sampley_fueltrack.MVC.MVCView;
 import sampley.sampley_fueltrack.data.Entry;
 
 /**
@@ -21,7 +23,7 @@ import sampley.sampley_fueltrack.data.Entry;
  * contains the context under which it was created, which is used to manage file access.
  * </p>
  */
-public class AppData {
+public class AppData extends MVCModel {
     private static AppData instance;
     private Context context;
     private List<Entry> entries;
@@ -29,6 +31,7 @@ public class AppData {
 
     // prevent use of default constructor, other than to create one instance
     protected AppData(Context c) {
+        super();
         this.entries = new ArrayList<Entry>();
         this.context = c;
         try {
@@ -44,11 +47,11 @@ public class AppData {
 
     public static AppData newInstance(Context c) {
         if (instance == null) {
-            return new AppData(c);
+            instance = new AppData(c);
         } else {
             instance.context = c;
-            return instance;
         }
+        return instance;
     }
 
 

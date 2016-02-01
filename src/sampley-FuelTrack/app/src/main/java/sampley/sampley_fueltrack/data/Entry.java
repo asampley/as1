@@ -21,6 +21,7 @@ import java.util.Date;
  * </p>
  */
 public class Entry implements Serializable {
+
     private Date date;
     private Station station;
     private Fuel fuel;
@@ -88,5 +89,37 @@ public class Entry implements Serializable {
     @Override
     public String toString() {
         return dateFormat.format(date) + " " + station + " " + fuel;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public float getOdometer() {
+        return odometer;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
+    }
+
+    public void setOdometer(float odometer) {
+        this.odometer = odometer;
     }
 }
