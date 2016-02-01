@@ -10,3 +10,5 @@ Station Name
 Fuel Amount, Grade, and Cost per Litre
 
 The user can add entries by supplying that information, and view all their previous entries. Additionally, the user may edit previous entries, after they have been added.
+
+A video demonstration can be found at: https://youtu.be/l0Oa3VD5NpI
